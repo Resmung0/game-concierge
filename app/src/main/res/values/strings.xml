@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Game Concierge</string>
+    <string name="tile_name">Concierge</string>
+    <string name="tile_subtitle">Gaming Assistant</string>
+    <string name="tile_active">Active</string>
+    <string name="tile_inactive">Inactive</string>
+
+    <!-- Notification -->
+    <string name="overlay_channel_name">Game Concierge Floating Overlay</string>
+    <string name="overlay_channel_desc">Active floating companion overlay status</string>
+    <string name="overlay_notification_title">Game Concierge Active</string>
+    <string name="overlay_notification_text">Floating capsule is ready. Tap to open or collapse.</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_toggle">Toggle Panel</string>
+
+    <!-- Onboarding / Status UI -->
+    <string name="dashboard_title">Game Concierge</string>
+    <string name="dashboard_subtitle">Contextual Gaming Companion</string>
+    <string name="status_ready">System Ready</string>
+    <string name="status_needs_permission">Overlay Permission Required</string>
+    <string name="perm_overlay_title">Display Over Other Apps</string>
+    <string name="perm_overlay_desc">Allows the floating capsule to hover over your games without root or custom ROMs.</string>
+    <string name="btn_grant_overlay">Grant Overlay Permission</string>
+    <string name="btn_overlay_granted">Overlay Permission Active</string>
+    
+    <string name="perm_notif_title">Status Notification</string>
+    <string name="perm_notif_desc">Ensures the companion service stays responsive while games are running in foreground.</string>
+    <string name="btn_grant_notif">Enable Notifications</string>
+    
+    <string name="tile_guide_title">Quick Settings Integration</string>
+    <string name="tile_guide_desc">Swipe down from the top of your screen twice, tap the Edit (pencil) icon, and drag the "Concierge" tile into your active quick toggles.</string>
+
+    <string name="companion_controls_title">Companion Controls</string>
+    <string name="btn_start_companion">Launch Floating Companion</string>
+    <string name="btn_stop_companion">Stop Companion</string>
+    <string name="state_running">Companion is currently floating</string>
+    <string name="state_idle">Companion is currently stopped</string>
+
+    <!-- HUD Strings -->
+    <string name="hud_title">Game Concierge</string>
+    <string name="hud_manual_context">Manual Context</string>
+    <string name="hud_collapse">Collapse</string>
+    <string name="hud_close">Close Overlay</string>
+    <string name="hud_active_game">Active Game</string>
+    <string name="hud_default_game">Select Game</string>
+    <string name="hud_placeholder_greeting">Hello! I am your Game Concierge. Ask for boss strategies, puzzle clues, lore, or collectibles.</string>
+    <string name="hud_query_hint">Ask a question about the game…</string>
+    <string name="hud_btn_send">Send</string>
+    <string name="hud_btn_mic">Voice</string>
+    <string name="hud_btn_vision">Screenshot</string>
+
+    <!-- Voice and Speech Synthesis (Phase 6) -->
+    <string name="voice_card_title">VOICE ASSISTANT &amp; SPEECH SYNTHESIS</string>
+    <string name="voice_card_desc">Zero-silent-listening voice assistant with explicit microphone control, real-time speech recognition, cancellation, and TextToSpeech read-aloud.</string>
+    <string name="voice_perm_title">Microphone Access Required</string>
+    <string name="voice_perm_desc">Microphone permission is required for voice commands. The microphone will NEVER listen in the background or activate silently.</string>
+    <string name="voice_btn_grant_mic">Grant Microphone Permission</string>
+    <string name="voice_btn_listen">Listen</string>
+    <string name="voice_btn_stop_listen">Stop</string>
+    <string name="voice_btn_cancel_listen">Cancel</string>
+    <string name="voice_status_listening">Listening • Speak now…</string>
+    <string name="voice_status_processing">Processing audio…</string>
+    <string name="voice_status_speaking">Speaking aloud…</string>
+    <string name="voice_auto_read_aloud">Auto Read Aloud</string>
+</resources>

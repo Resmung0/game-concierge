@@ -1,0 +1,6 @@
+{
+  "name": "Game Concierge",
+  "description": "Native Android gaming assistant with Quick Settings tile and floating companion overlay.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
