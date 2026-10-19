@@ -25,7 +25,9 @@ class MainActivity : ComponentActivity() {
                         .safeDrawingPadding()
                 ) { innerPadding ->
                     DashboardScreen(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
                     )
                 }
             }

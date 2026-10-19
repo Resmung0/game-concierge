@@ -27,6 +27,7 @@ interface GameContextRepository {
     fun addConfirmedFact(fact: String)
 
     fun clearSessionObservations()
+    fun resetFullSession()
 }
 
 class DefaultGameContextRepository(
@@ -235,5 +236,11 @@ class DefaultGameContextRepository(
                 lastUpdated = System.currentTimeMillis()
             )
         }
+    }
+
+    override fun resetFullSession() {
+        val currentGameId = _sessionContext.value.gameId
+        val currentGameTitle = _sessionContext.value.gameTitle
+        _sessionContext.value = createInitialContext(currentGameId, currentGameTitle)
     }
 }

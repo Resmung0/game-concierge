@@ -413,6 +413,8 @@ fun ConversationView(
 
         // Permission denied inline prompt
         AnimatedVisibility(visible = listeningState is ListeningState.PermissionDenied) {
+            val denied = listeningState as? ListeningState.PermissionDenied
+            val isPermanent = denied?.isPermanent == true
             Surface(
                 shape = RoundedCornerShape(8.dp),
                 color = CyberAmber.copy(alpha = 0.15f),
@@ -428,19 +430,40 @@ fun ConversationView(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Microphone permission required for voice.",
+                        text = if (isPermanent) {
+                            "Microphone access blocked. Open App Settings to enable."
+                        } else {
+                            "Microphone permission required for voice."
+                        },
                         fontSize = 11.sp,
                         color = CyberAmber,
                         modifier = Modifier.weight(1f)
                     )
-                    Button(
-                        onClick = { VoiceManager.startListening(context) },
-                        colors = ButtonDefaults.buttonColors(containerColor = CyberAmber, contentColor = Color.Black),
-                        shape = RoundedCornerShape(6.dp),
-                        modifier = Modifier.height(26.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text("Grant", fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        Button(
+                            onClick = {
+                                if (isPermanent) {
+                                    context.startActivity(com.example.util.PermissionUtils.getAppSettingsIntent(context))
+                                } else {
+                                    VoiceManager.startListening(context)
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = CyberAmber, contentColor = Color.Black),
+                            shape = RoundedCornerShape(6.dp),
+                            modifier = Modifier.height(26.dp),
+                            contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp)
+                        ) {
+                            Text(if (isPermanent) "Settings" else "Grant", fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        }
+                        IconButton(
+                            onClick = { VoiceManager.resetState() },
+                            modifier = Modifier.size(24.dp)
+                        ) {
+                            Icon(Icons.Default.Close, contentDescription = "Dismiss", tint = CyberAmber, modifier = Modifier.size(14.dp))
+                        }
                     }
                 }
             }

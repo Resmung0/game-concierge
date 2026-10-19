@@ -203,6 +203,34 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
                         }
                     }
 
+                    val listeningState by com.example.voice.VoiceManager.listeningState.collectAsState()
+                    val ttsState by com.example.voice.VoiceManager.ttsState.collectAsState()
+
+                    androidx.compose.runtime.LaunchedEffect(listeningState, chatUiState.isGenerating, ttsState, uiState) {
+                        if (uiState != OverlayUiState.COLLAPSED && uiState != OverlayUiState.SUSPENDED) {
+                            when {
+                                listeningState is com.example.voice.ListeningState.Listening -> {
+                                    if (uiState != OverlayUiState.LISTENING) {
+                                        OverlayStateManager.requestTransition(OverlayUiState.LISTENING)
+                                    }
+                                }
+                                chatUiState.isGenerating -> {
+                                    if (uiState != OverlayUiState.THINKING) {
+                                        OverlayStateManager.requestTransition(OverlayUiState.THINKING)
+                                    }
+                                }
+                                ttsState is com.example.voice.TtsPlaybackState.Speaking -> {
+                                    if (uiState != OverlayUiState.SPEAKING) {
+                                        OverlayStateManager.requestTransition(OverlayUiState.SPEAKING)
+                                    }
+                                }
+                                uiState in setOf(OverlayUiState.LISTENING, OverlayUiState.THINKING, OverlayUiState.SPEAKING) -> {
+                                    OverlayStateManager.requestTransition(OverlayUiState.EXPANDED)
+                                }
+                            }
+                        }
+                    }
+
                     Box(modifier = Modifier.fillMaxSize()) {
                         when {
                             uiState == OverlayUiState.COLLAPSED -> {
@@ -300,6 +328,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
             ).apply {
                 gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
                 y = (screenHeight * 0.08f).toInt()
+                softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
             }
         } else {
             // Collapsed capsule: WRAP_CONTENT, non-focusable so gameplay touches are unaffected
@@ -325,6 +354,14 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
                 isViewAttached = true
             } else {
                 wm.updateViewLayout(view, params)
+            }
+        } catch (e: IllegalArgumentException) {
+            // View may have been detached by system or configuration change: attempt recovery
+            try {
+                wm.addView(view, params)
+                isViewAttached = true
+            } catch (_: Exception) {
+                isViewAttached = false
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -462,6 +499,14 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Screen orientation, display density, or multi-window bounds changed: re-anchor window layout
+        if (OverlayStateManager.isServiceRunning.value) {
+            updateWindowLayout(OverlayStateManager.uiState.value)
         }
     }
 

@@ -35,6 +35,7 @@ object OverlayStateTransition {
                 OverlayUiState.COLLAPSED,
                 OverlayUiState.LISTENING,
                 OverlayUiState.THINKING,
+                OverlayUiState.SPEAKING,
                 OverlayUiState.CAPTURING,
                 OverlayUiState.SUSPENDED,
                 OverlayUiState.ERROR

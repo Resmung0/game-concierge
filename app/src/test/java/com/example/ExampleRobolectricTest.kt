@@ -33,6 +33,7 @@ class ExampleRobolectricTest {
         assertTrue(OverlayStateTransition.isValid(OverlayUiState.COLLAPSED, OverlayUiState.EXPANDED))
         assertTrue(OverlayStateTransition.isValid(OverlayUiState.EXPANDED, OverlayUiState.COLLAPSED))
         assertTrue(OverlayStateTransition.isValid(OverlayUiState.EXPANDED, OverlayUiState.LISTENING))
+        assertTrue(OverlayStateTransition.isValid(OverlayUiState.EXPANDED, OverlayUiState.SPEAKING))
         assertTrue(OverlayStateTransition.isValid(OverlayUiState.EXPANDED, OverlayUiState.CAPTURING))
         assertTrue(OverlayStateTransition.isValid(OverlayUiState.LISTENING, OverlayUiState.THINKING))
         assertTrue(OverlayStateTransition.isValid(OverlayUiState.THINKING, OverlayUiState.SPEAKING))

@@ -138,4 +138,23 @@ class GameContextRepositoryTest {
         assertEquals(1, totkGuides.size)
         assertTrue(totkGuides.first().tacticalSteps.any { it.contains("free fall") || it.contains("diving") })
     }
+
+    @Test
+    fun `resetFullSession wipes transient observations and resets facts to initial game state`() {
+        contextRepo.addVisualObservation("Transient boss observation", ConfidenceLevel.HIGH)
+        contextRepo.addHypothesis("Transient hypothesis", requiresConfirmation = true)
+        contextRepo.addConfirmedFact("Player acquired sacred tear")
+
+        val stateBefore = contextRepo.sessionContext.value
+        assertEquals(1, stateBefore.visualObservations.size)
+        assertEquals(2, stateBefore.hypotheses.size)
+        assertEquals(2, stateBefore.confirmedFacts.size)
+
+        // Privacy action: reset session
+        contextRepo.resetFullSession()
+
+        val stateAfter = contextRepo.sessionContext.value
+        assertTrue(stateAfter.visualObservations.isEmpty())
+        assertFalse(stateAfter.confirmedFacts.any { it.content.contains("sacred tear") })
+    }
 }

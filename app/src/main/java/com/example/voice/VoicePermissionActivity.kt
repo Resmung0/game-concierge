@@ -15,7 +15,8 @@ class VoicePermissionActivity : ComponentActivity() {
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        VoiceManager.handlePermissionResult(isGranted)
+        val isPermanent = !isGranted && !shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)
+        VoiceManager.handlePermissionResult(isGranted, isPermanent)
         finishWithNoAnimation()
     }
 
@@ -24,7 +25,7 @@ class VoicePermissionActivity : ComponentActivity() {
         try {
             permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
         } catch (e: Exception) {
-            VoiceManager.handlePermissionResult(false)
+            VoiceManager.handlePermissionResult(isGranted = false, isPermanent = false)
             finishWithNoAnimation()
         }
     }

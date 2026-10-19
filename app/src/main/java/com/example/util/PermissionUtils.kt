@@ -31,6 +31,18 @@ object PermissionUtils {
     }
 
     /**
+     * Intent to take the user to the app's system details settings page to re-enable denied permissions.
+     */
+    fun getAppSettingsIntent(context: Context): Intent {
+        return Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse("package:${context.packageName}")
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    }
+
+    /**
      * Checks if notifications are permitted (Android 13+ / API 33+).
      */
     fun hasNotificationPermission(context: Context): Boolean {
